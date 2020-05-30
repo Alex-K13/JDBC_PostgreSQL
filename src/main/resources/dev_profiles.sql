@@ -2022,3 +2022,41 @@ insert into profiles_table (id, username, job_title, department, company, skill)
 
 alter table profiles_table
     rename to profiles;
+
+-- 1 --
+select * from profiles
+where department='Services'
+order by skill;
+
+-- 2 --
+select job_title, count(*) as tittle_number
+from profiles
+group by job_title
+having count(*) > 3;
+
+-- 3 --
+select first_name,last_name,job_title,company
+from profiles, accounts
+where City='Hamburg';
+
+-- 4 --
+select department, count(username) as worker
+from profiles
+group by department
+order by count(username) desc;
+
+-- 5 --
+select count(profiles.id) as number_of_profiles, profiles.job_title, accounts.City
+from profiles
+         inner join accounts on profiles.id = accounts.id
+group by profiles.job_title, accounts.City
+order by count(profiles.id) desc;
+
+-- 6 --
+select * from accounts
+order by City;
+
+-- 7 --
+update profiles
+set job_title=replace( job_title, '%Engineer%', '%Developer%') where job_title like '%Engineer%'
+select * from profiles where job_title like '%Developer%';
